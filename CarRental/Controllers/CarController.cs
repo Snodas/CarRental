@@ -1,12 +1,26 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using CarRental.Data.Interfaces;
+using Microsoft.AspNetCore.Http;
+using CarRental.Data;
 using Microsoft.AspNetCore.Mvc;
+using CarRental.ViewModels;
 
 namespace CarRental.Controllers
 {
     public class CarController : Controller
     {
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly ICar _carRepsitory;
+        private readonly ApplicationDbContext _context;
+        public CarController(IHttpContextAccessor httpContextAccessor, ICar carRepsitory, ApplicationDbContext context)
+        {
+            _httpContextAccessor = httpContextAccessor;
+            _carRepsitory = carRepsitory;
+            _context = context;
+        }
+
+
         // GET: CarController
-        public ActionResult Index()
+        public ActionResult Index(int id)
         {
             return View();
         }
@@ -26,16 +40,17 @@ namespace CarRental.Controllers
         // POST: CarController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public async Task<ActionResult> Create(CarCreateViewModel model)
         {
-            try
+            if (!ModelState.IsValid)
             {
-                return RedirectToAction(nameof(Index));
+                return BadRequest(ModelState);
             }
-            catch
+            
+            var car = new Car
             {
-                return View();
-            }
+
+            };
         }
 
         // GET: CarController/Edit/5

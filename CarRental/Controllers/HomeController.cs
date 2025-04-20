@@ -45,8 +45,13 @@ namespace CarRental.Controllers
 
         public async Task<IActionResult> Bookings()
         {
-            var userId = _authService.GetUserId();
-            var bookings = await _bookingRepository.GetAllAsync(b => b.UserId == userId);
+            if (!_authService.IsUserLoggedIn())
+            {
+                TempData["ErrorMessage"] = "Du måste vara inloggad för att se dina bokningar.";
+                return RedirectToAction("Account", "Login");
+            }
+            
+            return View();
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

@@ -3,6 +3,7 @@ using CarRental.Data.Interfaces;
 using CarRental.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using CarRental.ViewModels; 
 
 namespace CarRental.Controllers
 {
@@ -45,7 +46,7 @@ namespace CarRental.Controllers
         // POST: BookingController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public async Task<ActionResult> Create(IFormCollection collection)
         {
             try
             {

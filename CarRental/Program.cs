@@ -5,6 +5,7 @@ using CarRental.Data.Seeding;
 using CarRental.Models;
 using CarRental.Services;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 
 namespace CarRental
 {
@@ -19,8 +20,9 @@ namespace CarRental
             builder.Services.AddHttpContextAccessor();
 
             //DataBase
-            builder.Services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+            //builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+            builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=CarRental;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False"));
 
             //Injecting
             builder.Services.AddScoped<IBaseUser, BaseUserRepository>();
