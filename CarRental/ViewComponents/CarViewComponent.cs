@@ -15,7 +15,7 @@ namespace CarRental.ViewComponents
 
         public async Task<IViewComponentResult> InvokeAsync(int carId)
         {
-            
+            return View("Default");
         }
     }
 }

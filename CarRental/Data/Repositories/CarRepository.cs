@@ -1,5 +1,6 @@
 ﻿using CarRental.Data.Interfaces;
 using CarRental.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace CarRental.Data.Repositories
 {
@@ -8,6 +9,11 @@ namespace CarRental.Data.Repositories
         public CarRepository(ApplicationDbContext context) : base(context)
         {
 
+        }
+
+        public async Task<IEnumerable<Car>> GetAllCarsAsync()
+        {
+            return await dbContext.Cars.ToListAsync();
         }
     }
 }

@@ -47,10 +47,12 @@ namespace CarRental.Controllers
                 return BadRequest(ModelState);
             }
             
-            var car = new Car
-            {
+            //var car = new Car
+            //{
 
-            };
+            //};
+
+            return View();
         }
 
         // GET: CarController/Edit/5

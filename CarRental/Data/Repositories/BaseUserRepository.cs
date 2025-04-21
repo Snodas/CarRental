@@ -1,5 +1,6 @@
 ﻿using CarRental.Data.Interfaces;
 using CarRental.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace CarRental.Data.Repositories
 {
@@ -8,6 +9,11 @@ namespace CarRental.Data.Repositories
         public BaseUserRepository(ApplicationDbContext context) : base(context)
         {
 
+        }
+
+        public async Task<BaseUser?> GetUser(int id)
+        {
+            return await dbContext.BaseUsers.SingleOrDefaultAsync(u => u.Id == id);
         }
     }
 }

@@ -1,9 +1,9 @@
-using CarRental.Services;
 using CarRental.Data;
 using System.Diagnostics;
 using CarRental.Models;
 using Microsoft.AspNetCore.Mvc;
 using CarRental.Data.Interfaces;
+using CarRental.Services.Auth;
 
 namespace CarRental.Controllers
 {
@@ -34,8 +34,8 @@ namespace CarRental.Controllers
                 Console.WriteLine(storedUser.PassWord);
             }
 
-            var cars = await _carRepository.GetAllAsync();
-            return View(cars);
+            //var cars = await _carRepository.GetAllAsync();
+            return View();
         }
 
         public IActionResult Privacy()

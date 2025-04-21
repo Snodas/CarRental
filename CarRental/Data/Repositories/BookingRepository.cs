@@ -1,13 +1,19 @@
 ﻿using CarRental.Models;
 using CarRental.Data.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace CarRental.Data.Repositories
 {
-    public class BookingRepository : GenericRepository<Booking, ApplicationDbContext>, IBooking
+    public class IBookingRepository : GenericRepository<Booking, ApplicationDbContext>, IBooking
     {
-        public BookingRepository(ApplicationDbContext context) : base(context)
+        public IBookingRepository(ApplicationDbContext context) : base(context)
         {
 
+        }
+        
+        public async Task<IEnumerable<Booking>> GetAllBookingsAsync()
+        {
+            return await dbContext.Bookings.ToListAsync();
         }
     }
 }

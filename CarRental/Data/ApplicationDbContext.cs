@@ -13,13 +13,29 @@ namespace CarRental.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            // Configure the relationships and keys here if needed
-            //modelBuilder.Entity<Car>()
-            //    .HasKey(c => c.Id);
-            //modelBuilder.Entity<Booking>()
-            //    .HasKey(b => b.Id);
-            //modelBuilder.Entity<BaseUser>()
-            //    .HasKey(u => u.Id);
+
+            // BaseUser
+            modelBuilder.Entity<BaseUser>()
+                .HasKey(c => c.Id);
+                //.HasDiscriminator<string>("Role")
+                //.HasValue<Admin>("Admin")
+                //.HasValue<Customer>("Customer");
+
+            // Car
+            modelBuilder.Entity <Car>()
+                .HasKey(c => c.Id);
+
+
+
+
+
+            // Booking
+            modelBuilder.Entity<Booking>()
+                .HasKey(c => c.Id);
+
+
+
+
         }
     }  
 }

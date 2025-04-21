@@ -1,4 +1,4 @@
-﻿using CarRental.Services;
+﻿using CarRental.Services.Auth;
 using CarRental.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;

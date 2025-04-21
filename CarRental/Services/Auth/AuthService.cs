@@ -5,14 +5,14 @@ using CarRental.ViewModels;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Http;
 
-namespace CarRental.Services
+namespace CarRental.Services.Auth
 {
     public class AuthService : IAuthService
     {
-        private readonly IHttpContextAccessor _accessor;     
+        private readonly IHttpContextAccessor _accessor;
         private readonly IBaseUser _baseUserRepository;
         private readonly ApplicationDbContext _context;
-        
+
         public AuthService(IHttpContextAccessor accessor, IBaseUser baseUserRepository, ApplicationDbContext context)
         {
             _accessor = accessor;
@@ -66,11 +66,14 @@ namespace CarRental.Services
         public async Task Register(RegisterViewModel model)
         {
             BaseUser user;
-            
-            var newUser = new BaseUser { FirstName = model.FirstName,
+
+            var newUser = new BaseUser
+            {
+                FirstName = model.FirstName,
                 LastName = model.LastName,
                 Email = model.Email,
-                Password = model.Password};
+                Password = model.Password
+            };
 
             await _baseUserRepository.AddAsync(newUser);
         }

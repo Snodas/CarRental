@@ -1,7 +1,7 @@
 ﻿using CarRental.Models;
 using CarRental.ViewModels;
 
-namespace CarRental.Services
+namespace CarRental.Services.Auth
 {
     public interface IAuthService
     {

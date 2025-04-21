@@ -4,6 +4,7 @@ using CarRental.Data.Repositories;
 using CarRental.Data.Seeding;
 using CarRental.Models;
 using CarRental.Services;
+using CarRental.Services.Auth;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 
@@ -27,7 +28,9 @@ namespace CarRental
             //Injecting
             builder.Services.AddScoped<IBaseUser, BaseUserRepository>();
             builder.Services.AddScoped<ICar, CarRepository>();
-            builder.Services.AddScoped<IBooking, BookingRepository>();
+            builder.Services.AddScoped<IBooking, IBookingRepository>();
+            builder.Services.AddScoped<IAuthService, AuthService>();
+            //builder.Services.AddScoped<IBookingService, BookingService>();
 
             builder.Services.AddDistributedMemoryCache();
 
@@ -48,11 +51,11 @@ namespace CarRental
                 app.UseHsts();
             }
 
-            using (var scope = app.Services.CreateScope())
-            {
-                var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-                SeedData.SeedAsync(context).Wait();
-            }
+            //using (var scope = app.Services.CreateScope())
+            //{
+            //    var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+            //    SeedData.SeedAsync(context).Wait();
+            //}
 
             app.UseHttpsRedirection();
             app.UseRouting();

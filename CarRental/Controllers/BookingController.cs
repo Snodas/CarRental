@@ -1,9 +1,9 @@
 ﻿using CarRental.Data;
 using CarRental.Data.Interfaces;
-using CarRental.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using CarRental.ViewModels; 
+using CarRental.ViewModels;
+using CarRental.Services.Auth;
 
 namespace CarRental.Controllers
 {
