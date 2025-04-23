@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using CarRental.ViewModels;
 using CarRental.Models;
 using Microsoft.AspNetCore.Razor.TagHelpers;
+using CarRental.Services.Auth;
 
 namespace CarRental.Controllers
 {
@@ -14,17 +15,24 @@ namespace CarRental.Controllers
         private readonly ICar _carRepsitory;
         private readonly IBooking _bookingRepository;
         private readonly ApplicationDbContext _context;
-        
-        public CarController(IHttpContextAccessor httpContextAccessor, ICar carRepsitory, IBooking bookingRepository, ApplicationDbContext context)
+        private readonly IAuthService _authService;
+
+        public CarController(IHttpContextAccessor httpContextAccessor, ICar carRepsitory, IBooking bookingRepository, ApplicationDbContext context, IAuthService authService)
         {
             _httpContextAccessor = httpContextAccessor;
             _carRepsitory = carRepsitory;
             _bookingRepository = bookingRepository;
             _context = context;
+            _authService = authService;
         }
 
         public async Task<IActionResult> Index()
         {
+            if (!_authService.IsUserLoggedIn())
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
             var cars = await _carRepsitory.GetAllCarsAsync();
             var carViewModels = cars.Select(car => new CarViewModel
             {

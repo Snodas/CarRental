@@ -36,6 +36,11 @@ namespace CarRental.Controllers
         // GET: BookingController
         public async Task<ActionResult> Index()
         {
+            if (!_authService.IsUserLoggedIn())
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
             var bookings = await _context.Bookings
                 .Include(b => b.Car)
                 .Include(b => b.User)
