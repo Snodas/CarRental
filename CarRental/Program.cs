@@ -21,8 +21,6 @@ namespace CarRental
             builder.Services.AddHttpContextAccessor();
 
             //DataBase
-            //builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-
             builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=CarRental;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False"));
 
             //Injecting
@@ -30,7 +28,7 @@ namespace CarRental
             builder.Services.AddScoped<ICar, CarRepository>();
             builder.Services.AddScoped<IBooking, IBookingRepository>();
             builder.Services.AddScoped<IAuthService, AuthService>();
-            //builder.Services.AddScoped<IBookingService, BookingService>();
+            builder.Services.AddScoped<IBookingService, BookingService>();
 
             builder.Services.AddDistributedMemoryCache();
 
@@ -51,11 +49,11 @@ namespace CarRental
                 app.UseHsts();
             }
 
-            //using (var scope = app.Services.CreateScope())
-            //{
-            //    var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-            //    SeedData.SeedAsync(context).Wait();
-            //}
+            using (var scope = app.Services.CreateScope())
+            {
+                var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+                SeedData.SeedAsync(context).Wait();
+            }
 
             app.UseHttpsRedirection();
             app.UseRouting();

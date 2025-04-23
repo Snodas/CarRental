@@ -25,17 +25,6 @@ namespace CarRental.Services.Auth
             return _accessor?.HttpContext?.Session.GetObject<T>("User") as BaseUser;
         }
 
-        //public async Task<BaseUser?> GetTrackedUser()
-        //{
-        //    var id = GetUserId();
-        //    if (id == null)
-        //    {
-        //        return default;
-        //    }
-
-        //    return await _baseUserRepository.GetUserWithProfile();
-        //}
-
         public int? GetUserId()
         {
             return _accessor?.HttpContext?.Session?.GetObject<Customer>("User")?.Id;
@@ -43,7 +32,7 @@ namespace CarRental.Services.Auth
 
         public bool IsUserLoggedIn()
         {
-            throw new NotImplementedException();
+            return GetUser<BaseUser>() != null;
         }
 
         public async Task<bool> Login(string email, string password)
@@ -67,7 +56,7 @@ namespace CarRental.Services.Auth
         {
             BaseUser user;
 
-            var newUser = new BaseUser
+            var newUser = new Customer
             {
                 FirstName = model.FirstName,
                 LastName = model.LastName,

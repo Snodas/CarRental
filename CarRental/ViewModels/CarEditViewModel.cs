@@ -2,8 +2,10 @@
 
 namespace CarRental.ViewModels
 {
-    public class CarCreateViewModel
+    public class CarEditViewModel
     {
+        public int Id { get; set; }
+
         [Required(ErrorMessage = "Brand is required")]
         public string Brand { get; set; }
 

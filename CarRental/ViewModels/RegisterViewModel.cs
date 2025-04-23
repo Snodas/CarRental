@@ -19,11 +19,6 @@ namespace CarRental.ViewModels
         [Display(Name = "Email")]
         public string Email { get; set; }
 
-        [Required(ErrorMessage = "Phone number is required")]
-        [DataType(DataType.PhoneNumber)]
-        [Display(Name = "PhoneNumber")]
-        public string PhoneNumber { get; set; }
-
         [Required(ErrorMessage = "Password is required")]
         [DataType(DataType.Password)]
         [Display(Name = "Password")]
@@ -34,8 +29,5 @@ namespace CarRental.ViewModels
         [Compare("Password")]
         [Display(Name = "Confirm Password")]
         public string ConfirmPassword { get; set; }
-
-        [Display(Name = "Is Premium")]
-        public bool? IsPremium { get; set; }
     }
 }

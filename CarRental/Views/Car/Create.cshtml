@@ -1,0 +1,27 @@
+﻿@model CarRental.ViewModels.CarCreateViewModel
+
+<h1>Create Car</h1>
+
+<form asp-action="Create" method="post">
+    <div class="mb-3">
+        <label for="Brand" class="form-label">Brand</label>
+        <input asp-for="Brand" class="form-control" placeholder="Enter car brand (required)" />
+        <span asp-validation-for="Brand" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label for="Model" class="form-label">Model</label>
+        <input asp-for="Model" class="form-control" placeholder="Enter car model (required)" />
+        <span asp-validation-for="Model" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label for="MakeYear" class="form-label">Year</label>
+        <input asp-for="MakeYear" class="form-control" placeholder="Enter car year (required)" />
+        <span asp-validation-for="MakeYear" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label for="ImageUrl" class="form-label">Image URL</label>
+        <input asp-for="ImageUrl" class="form-control" placeholder="Enter image URL (required)" />
+        <span asp-validation-for="ImageUrl" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-success">Create</button>
+</form>

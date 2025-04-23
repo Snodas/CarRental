@@ -11,6 +11,5 @@ namespace CarRental.Services.Auth
         Task<bool> Login(string email, string password);
         void Logout();
         Task Register(RegisterViewModel model);
-        //Task<BaseUser?> GetTrackedUser();
     }
 }

@@ -1,5 +1,50 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model CarRental.ViewModels.LoginViewModel
+
 @{
+    ViewData["Title"] = "Login";
+    var errorMessage = TempData["ErrorMessage"] as string;
+}
+
+<!-- Login -->
+<div class="row justify-content-center">
+    
+    <div class="col-md-6 col-lg-4">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <div asp-validation-summary="All" class="text-danger"></div>
+                <h3 class="text-center">Logga in</h3>
+
+                @if (!string.IsNullOrEmpty(errorMessage))
+                {
+                    <div class="alert alert-danger">
+                        @errorMessage
+                    </div>
+                }
+
+                <form asp-action="Login" method="post">
+                    <div class="mb-3">
+                        <label for="Email" class="form-label">E-post</label>
+                        <input class="form-control" asp-for="Email" placeholder="E-post" required />
+                    </div>
+                    <div class="mb-3">
+                        <label for="Password" class="form-label">Lösenord</label>
+                        <input class="form-control" asp-for="Password" type="password" placeholder="Lösenord" required />
+                    </div>
+                    <div class="d-grid">
+                        <button class="btn btn-primary" type="submit" value="Login">Logga in</button>
+                    </div>
+
+                    @if (ViewBag.Error != null)
+                    {
+                        <p style="color:red" class="text-center">@ViewBag.Error</p>
+                    }
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

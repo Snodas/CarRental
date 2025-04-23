@@ -29,28 +29,40 @@ namespace CarRental.Controllers
         public async Task<IActionResult> Index()
         {
             var storedUser = HttpContext.Session.GetObject<dynamic>("User");
+
             if (storedUser != null)
             {
-                Console.WriteLine(storedUser.PassWord);
+                Console.WriteLine((string)storedUser.PassWord);
             }
 
-            //var cars = await _carRepository.GetAllAsync();
-            return View();
+            var cars = await _carRepository.GetAllCarsAsync();
+            return View(cars);
         }
 
         public IActionResult Privacy()
         {
             return View();
         }
-
-        public async Task<IActionResult> Bookings()
+        
+        public IActionResult Car()
         {
             if (!_authService.IsUserLoggedIn())
             {
-                TempData["ErrorMessage"] = "Du måste vara inloggad för att se dina bokningar.";
-                return RedirectToAction("Account", "Login");
+                TempData["Error"] = "You must be logged in to view this page.";
+                return RedirectToAction("Login", "Account");
             }
             
+            return View();
+        }
+
+        public IActionResult Bookings()
+        {
+            if (!_authService.IsUserLoggedIn())
+            {
+                TempData["Error"] = "You must be logged in to view this page.";
+                return RedirectToAction("Login", "Account");
+            }
+
             return View();
         }
 

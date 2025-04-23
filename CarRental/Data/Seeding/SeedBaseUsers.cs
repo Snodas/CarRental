@@ -11,13 +11,20 @@ namespace CarRental.Data.Seeding
                 FirstName = "Test",
                 LastName = "Testsson",
                 Email = "test@gmail.com",
-                Password = "1"
+                Password = "1",
+                Role = Role.Customer
+            });
+
+            context.BaseUsers.Add(new Customer
+            {
+                FirstName = "Admin",
+                LastName = "Adminsson",
+                Email = "admin@gmail.com",
+                Password = "1",
+                Role = Role.Admin
             });
 
             await context.SaveChangesAsync();
         }
-
-
-
     }
 }

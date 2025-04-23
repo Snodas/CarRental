@@ -15,15 +15,15 @@ namespace CarRental.Data.Seeding
                 await SeedCars.CarSeeding(context);
             }
 
-            if (!context.Bookings.Any())
-            {
-                await SeedBookings.BookingsSeeding(context);
-            }
-
             if (!context.BaseUsers.Any())
             {
                 await SeedBaseUsers.BaseUserSeeding(context);
             }
+
+            //if (!context.Bookings.Any())
+            //{
+            //    await SeedBookings.BookingsSeeding(context);
+            //}
         }
     }
 }

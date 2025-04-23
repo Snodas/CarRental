@@ -1,8 +1,32 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@model IEnumerable<CarRental.Models.Car>
+@using CarRental.Services
+@inject CarRental.Services.Auth.IAuthService AuthService
+
+@{
+    var isAuthenticated = AuthService.IsUserLoggedIn();
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="container">
+    <div class="row">
+        @foreach (var car in Model)
+        {
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    @if (!string.IsNullOrEmpty(car.ImageUrl))
+                    {
+                        <img src="@car.ImageUrl" class="card-img-top" alt="Car Image" style="max-width: 100%; height: auto;" />
+                    }
+                    else
+                    {
+                        <img src="~/images/no-image-available.png" class="card-img-top" alt="No Image Available" style="max-width: 100%; height: auto;" />
+                    }
+                    <div class="card-body">
+                        <h5 class="card-title">@car.Brand @car.Model</h5>
+                        <p class="card-text">Model Year: @car.MakeYear</p>
+                        <a href="@Url.Action("Create", "Booking", new { carId = car.Id })" class="btn btn-success">Book Now</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
 </div>

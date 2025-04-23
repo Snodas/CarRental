@@ -1,0 +1,18 @@
+﻿@model CarRental.ViewModels.BookingEditViewModel
+
+<h1>Edit Booking</h1>
+
+<form asp-action="Edit" method="post">
+    <input type="hidden" asp-for="Id" />
+
+    <div class="mb-3">
+        <label for="StartDate" class="form-label">Start Date and Time</label>
+        <input asp-for="StartDate" class="form-control" type="datetime-local"/>
+    </div>
+    <div class="mb-3">
+        <label for="EndDate" class="form-label">End Date and Time</label>
+        <input asp-for="EndDate" class="form-control" type="datetime-local"/>
+    </div>
+    <button type="submit" class="btn btn-success">Save</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+</form>

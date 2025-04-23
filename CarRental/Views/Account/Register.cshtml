@@ -1,5 +1,63 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
+﻿@model CarRental.ViewModels.RegisterViewModel
+
+
+<div class="row justify-content-center">
+    
+    <div class="col-md-6 col-lg-4">
+        <div class="card shadow-sm">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="card-body">
+                <h3 class="text-center">Registrera Konto</h3>  <!-- Page title -->
+                <!-- Error message -->
+                @if (!string.IsNullOrEmpty(ViewBag.Error))
+                {
+                    <div class="alert alert-danger">
+                        @ViewBag.Error
+                    </div>
+                }
+
+                <form asp-action="Register" method="post">
+                    <!-- First Name Field -->
+                    <div class="mb-3">
+                        <label for="FirstName" class="form-label">Förnamn</label>
+                        <input class="form-control" asp-for="FirstName" placeholder="Förnamn" required />
+                    </div>
+
+                    <!-- Last Name Field -->
+                    <div class="mb-3">
+                        <label for="LastName" class="form-label">Efternamn</label>
+                        <input class="form-control" asp-for="LastName" placeholder="Efternamn" required />
+                    </div>
+
+                    <!-- Email Field -->
+                    <div class="mb-3">
+                        <label for="Email" class="form-label">E-post</label>
+                        <input class="form-control" asp-for="Email" placeholder="E-post" required />
+                    </div>
+
+                    <!-- Password Field -->
+                    <div class="mb-3">
+                        <label for="Password" class="form-label">Lösenord</label>
+                        <input class="form-control" asp-for="Password" type="password" placeholder="Lösenord" required />
+                    </div>
+
+                    <!-- Confirm Password Field -->
+                    <div class="mb-3">
+                        <label for="ConfirmPassword" class="form-label">Bekräfta lösenord</label>
+                        <input class="form-control" asp-for="ConfirmPassword" type="password" placeholder="Bekräfta lösenord" required />
+                    </div>
+
+                    <!-- Submit Button -->
+                    <div class="d-grid">
+                        <button class="btn btn-primary" type="submit" value="Register">Skapa Konto</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

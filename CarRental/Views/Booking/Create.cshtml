@@ -1,0 +1,27 @@
+﻿@model CarRental.ViewModels.BookingCreateViewModel
+
+<h1>Create Booking</h1>
+
+<form asp-action="Create" method="post">
+    <div class="mb-3">
+        <label for="CarId" class="form-label">Car</label>
+        <select asp-for="CarId" class="form-select" asp-items="ViewBag.Cars">
+            <option value="">-- Select a Car --</option>
+        </select>
+    </div>
+    <div class="mb-3">
+        <label for="UserId" class="form-label">User</label>
+        <select asp-for="UserId" class="form-select" asp-items="ViewBag.Users">
+            <option value="">-- Select a User --</option>
+        </select>
+    </div>
+    <div class="mb-3">
+        <label for="StartDate" class="form-label">Start Date and Time</label>
+        <input asp-for="StartDate" class="form-control" type="datetime-local" step="600" />
+    </div>
+    <div class="mb-3">
+        <label for="EndDate" class="form-label">End Date and Time</label>
+        <input asp-for="EndDate" class="form-control" type="datetime-local" step="600" />
+    </div>
+    <button type="submit" class="btn btn-success">Create</button>
+</form>

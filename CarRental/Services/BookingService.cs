@@ -9,21 +9,13 @@ namespace CarRental.Services
     {
         private readonly IBooking _bookingRepository;
         private readonly ICar _carRepository;
+        private readonly ApplicationDbContext applicationDbContext;
 
-        public BookingService(IBooking bookingRepository, ICar carRepository)
+        public BookingService(IBooking bookingRepository, ICar carRepository, ApplicationDbContext applicationDbContext)
         {
             _bookingRepository = bookingRepository;
             _carRepository = carRepository;
-        }
-
-        public Task<Booking> CreateBookingAsync(Booking booking)
-        {
-            throw new NotImplementedException();
-        }
-
-        public async Task<Booking> DeleteBookingAsync(int id)
-        {
-            var booking = await _bookingRepository.GetByIdAsync(id);
+            this.applicationDbContext = applicationDbContext;
         }
 
         public Task<IEnumerable<Booking>> GetAllBookingsAsync()
@@ -36,14 +28,27 @@ namespace CarRental.Services
             throw new NotImplementedException();
         }
 
-        public Task<Booking> UpdateBookingAsync(int id, Booking booking)
+        public async Task<bool> ValidateBooking(int carId, DateTime startDate, DateTime endDate)
         {
-            throw new NotImplementedException();
-        }
+            if (endDate <= startDate)
+            {
+                return false;
+            }
 
-        public Task<Booking> ValidateAndCreateBookingAsync(Booking booking)
-        {
-            throw new NotImplementedException();
+            var overlappingBookings = await _bookingRepository.AllAsync();
+
+
+            //Check 1
+            var c1 = overlappingBookings.Any(b =>
+                b.CarId == carId &&
+                (startDate >= b.StartDate && startDate <= b.EndDate));
+
+            //Check 2
+            var c2 = overlappingBookings.Any(b =>
+                b.CarId == carId &&
+                (endDate >= b.StartDate && endDate <= b.EndDate));
+
+            return true;
         }
     }
 }

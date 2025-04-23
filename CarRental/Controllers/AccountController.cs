@@ -17,6 +17,11 @@ namespace CarRental.Controllers
             _authService = authService;
         }
 
+        public IActionResult Login()
+        {
+            return View();
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(LoginViewModel model)

@@ -1,5 +1,6 @@
 ﻿using CarRental.Data;
 using CarRental.Data.Interfaces;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CarRental.Models
 {
@@ -11,7 +12,7 @@ namespace CarRental.Models
         public string Email { get; set; } = string.Empty;
         public string Password { get; set; } = string.Empty;
 
-        public virtual Role Role { get; } = Role.None;
+        public virtual Role Role { get; set; } = Role.None;
 
         public virtual ICollection<Booking> Bookings { get; set; } = new List<Booking>();
 
