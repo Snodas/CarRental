@@ -30,6 +30,20 @@ namespace CarRental.Services.Auth
             return _accessor?.HttpContext?.Session?.GetObject<Customer>("User")?.Id;
         }
 
+        public async Task<bool> IsUserAdmin()
+        {
+            var user = GetUser<BaseUser>();
+            if (user == null)
+            {
+                return false;
+            }
+            var userFromDb = await _context.BaseUsers
+                .AsNoTracking()
+                .FirstOrDefaultAsync(u => u.Id == user.Id);
+
+            return userFromDb?.Role == Role.Admin;
+        }
+
         public bool IsUserLoggedIn()
         {
             return GetUser<BaseUser>() != null;

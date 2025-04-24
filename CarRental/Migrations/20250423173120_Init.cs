@@ -75,8 +75,7 @@ namespace CarRental.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Bookings_CarId",
                 table: "Bookings",
-                column: "CarId",
-                unique: true);
+                column: "CarId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Bookings_UserId",

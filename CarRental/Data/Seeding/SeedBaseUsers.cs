@@ -15,7 +15,7 @@ namespace CarRental.Data.Seeding
                 Role = Role.Customer
             });
 
-            context.BaseUsers.Add(new Customer
+            context.BaseUsers.Add(new Admin
             {
                 FirstName = "Admin",
                 LastName = "Adminsson",

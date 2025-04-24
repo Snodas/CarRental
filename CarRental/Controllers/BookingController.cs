@@ -50,12 +50,43 @@ namespace CarRental.Controllers
             var bookingViewModels = bookings.Select(booking => new BookingViewModel
             {
                 Id = booking.Id,
-                CarBrandModel = $"{booking.Car.Brand} {booking.Car.Model}",
-                UserFullName = $"{booking.User.FirstName} {booking.User.LastName}",
+                CarBrandModel = booking.Car != null ? $"{booking.Car.Brand} {booking.Car.Model}" : "Unknown Car",
+                UserFullName = booking.User != null ? $"{booking.User.FirstName} {booking.User.LastName}" : "Unknown User",
                 StartDate = booking.StartDate,
                 EndDate = booking.EndDate
             });
-            
+
+            return View(bookingViewModels);
+        }
+
+        public async Task<ActionResult> MyBookingsIndex()
+        {
+            if (!_authService.IsUserLoggedIn())
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+            var userId = _authService.GetUserId();
+            if (userId == null)
+            {
+                return Unauthorized();
+            }
+
+            var bookings = await _context.Bookings
+                .Include(b => b.Car)
+                .Include(b => b.User)
+                .Where(b => b.UserId == userId)
+                .ToListAsync();
+
+            var bookingViewModels = bookings.Select(booking => new BookingViewModel
+            {
+                Id = booking.Id,
+                CarBrandModel = booking.Car != null ? $"{booking.Car.Brand} {booking.Car.Model}" : "Unknown Car",
+                UserFullName = booking.User != null ? $"{booking.User.FirstName} {booking.User.LastName}" : "Unknown User",
+                StartDate = booking.StartDate,
+                EndDate = booking.EndDate
+            });
+
             return View(bookingViewModels);
         }
 
@@ -66,13 +97,16 @@ namespace CarRental.Controllers
         }
 
         // GET: BookingController/Create
-        public ActionResult Create()
+        public ActionResult Create(int carId)
         {
+            var userId = _authService.GetUserId();
+
             ViewBag.Cars = _context.Cars
             .Select(car => new SelectListItem
             {
                 Value = car.Id.ToString(),
-                Text = $"{car.Brand} {car.Model}"
+                Text = $"{car.Brand} {car.Model}",
+                Selected = car.Id == carId  
             })
             .ToList();
 
@@ -80,7 +114,8 @@ namespace CarRental.Controllers
                 .Select(user => new SelectListItem
                 {
                     Value = user.Id.ToString(),
-                    Text = $"{user.FirstName} {user.LastName}"
+                    Text = $"{user.FirstName} {user.LastName}",
+                    Selected = user.Id == userId
                 })
                 .ToList();
 
@@ -109,7 +144,15 @@ namespace CarRental.Controllers
                     EndDate = x.EndDate
                 };
                 await _bookingRepository.AddAsync(booking);
-                return RedirectToAction(nameof(Index));
+                
+                if (await _authService.IsUserAdmin())
+                {
+                    return RedirectToAction(nameof(Index));
+                }
+                else
+                {
+                    return RedirectToAction(nameof(MyBookingsIndex));
+                }
             }
 
             ViewBag.Cars = _context.Cars
@@ -171,10 +214,16 @@ namespace CarRental.Controllers
                 booking.EndDate = x.EndDate;
 
                 await _bookingRepository.UpdateAsync(booking);
-                return RedirectToAction(nameof(Index));
 
-            }
-            
+                if (await _authService.IsUserAdmin())
+                {
+                    return RedirectToAction(nameof(Index));
+                }
+                else
+                {
+                    return RedirectToAction(nameof(MyBookingsIndex));
+                }
+            }            
             return View(x);
         }
 

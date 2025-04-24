@@ -8,6 +8,8 @@ namespace CarRental.Services.Auth
         BaseUser? GetUser<T>() where T : BaseUser;
         int? GetUserId();
         bool IsUserLoggedIn();
+
+        Task<bool> IsUserAdmin();
         Task<bool> Login(string email, string password);
         void Logout();
         Task Register(RegisterViewModel model);
