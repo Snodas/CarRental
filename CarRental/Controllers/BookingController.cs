@@ -99,6 +99,11 @@ namespace CarRental.Controllers
         // GET: BookingController/Create
         public ActionResult Create(int carId)
         {
+            if (!_authService.IsUserLoggedIn())
+            {
+                return RedirectToAction("Login", "Account");
+            }
+            
             var userId = _authService.GetUserId();
 
             ViewBag.Cars = _context.Cars
